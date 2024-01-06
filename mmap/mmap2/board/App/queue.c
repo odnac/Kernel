@@ -19,22 +19,30 @@ int queue_is_full(Queue *queue)
 {
   return queue->rear == NULL;
 }
-
 int queue_enqueue(Queue *queue, unsigned char *data)
 {
   Node *node = (Node *)malloc(sizeof(Node));
   node->data = data;
   node->next = NULL;
 
-  if (queue_is_empty(queue))
+  if (queue_is_full(queue))
   {
-    queue->front = node;
-    queue->rear = node;
+    char *lost_data = queue_dequeue(queue);
+    free(lost_data);
   }
   else
   {
-    queue->rear->next = node;
-    queue->rear = node;
+    // 큐가 가득 차지 않은 경우
+    if (queue_is_empty(queue))
+    {
+      queue->front = node;
+      queue->rear = node;
+    }
+    else
+    {
+      queue->rear->next = node;
+      queue->rear = node;
+    }
   }
 
   return 0;

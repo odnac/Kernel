@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 
-#define MSG_SIZE 4096
+#define MSG_SIZE 1024
 #define IOCTL_MEMCPY 7
 
 extern char *map1;
